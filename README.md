@@ -42,8 +42,8 @@ Afterward, you can send a message as follows:
 
 ```java
 DiscordWebhook webhook = new DiscordWebhook(...);
-        webhook.setAvatarUrl(...);
-        webhook.setUsername("Some Title");
+webhook.setAvatarUrl(...);
+webhook.setUsername("Some Name");
 
 EmbedObject embed = new EmbedObject()
         .setTitle("A Title")
@@ -51,6 +51,6 @@ EmbedObject embed = new EmbedObject()
         .setDescription("Line 1 \\n Line 2")
         .setFooter(new Footer("A Footer", ""));
 
-webhook.addEmbed(embed);
+webhook.getEmbeds().add(embed);
 webhook.execute();
 ```
