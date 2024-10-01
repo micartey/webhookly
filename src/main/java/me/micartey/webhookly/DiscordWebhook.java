@@ -27,9 +27,6 @@ public class DiscordWebhook {
 
     @SuppressWarnings("unused")
     public void execute() throws IOException {
-        if (this.embeds.isEmpty())
-            throw new IllegalArgumentException("Set content or add at least one EmbedObject");
-
         JSONObject json = new JSONObject();
 
         json.put("content", this.content);
@@ -50,7 +47,7 @@ public class DiscordWebhook {
                 jsonEmbed.put("description", embed.getDescription());
                 jsonEmbed.put("url", embed.getUrl());
 
-                Optional.of(embed.getColor()).ifPresent(color -> {
+                Optional.ofNullable(embed.getColor()).ifPresent(color -> {
                     int rgb = color.getRed();
                     rgb = (rgb << 8) + color.getGreen();
                     rgb = (rgb << 8) + color.getBlue();
@@ -58,7 +55,7 @@ public class DiscordWebhook {
                     jsonEmbed.put("color", rgb);
                 });
 
-                Optional.of(embed.getFooter()).ifPresent(footer -> {
+                Optional.ofNullable(embed.getFooter()).ifPresent(footer -> {
                     JSONObject jsonFooter = new JSONObject();
 
                     jsonFooter.put("text", footer.getText());
@@ -66,21 +63,21 @@ public class DiscordWebhook {
                     jsonEmbed.put("footer", jsonFooter);
                 });
 
-                Optional.of(embed.getImage()).ifPresent(image -> {
+                Optional.ofNullable(embed.getImage()).ifPresent(image -> {
                     JSONObject jsonImage = new JSONObject();
 
                     jsonImage.put("url", image.getUrl());
                     jsonEmbed.put("image", jsonImage);
                 });
 
-                Optional.of(embed.getThumbnail()).ifPresent(thumbnail -> {
+                Optional.ofNullable(embed.getThumbnail()).ifPresent(thumbnail -> {
                     JSONObject jsonThumbnail = new JSONObject();
 
                     jsonThumbnail.put("url", thumbnail.getUrl());
                     jsonEmbed.put("thumbnail", jsonThumbnail);
                 });
 
-                Optional.of(embed.getAuthor()).ifPresent(author -> {
+                Optional.ofNullable(embed.getAuthor()).ifPresent(author -> {
                     JSONObject jsonAuthor = new JSONObject();
 
                     jsonAuthor.put("name", author.getName());
@@ -92,7 +89,7 @@ public class DiscordWebhook {
 
                 List<JSONObject> jsonFields = new ArrayList<>();
 
-                Optional.of(embed.getFields()).ifPresent(fields -> {
+                Optional.ofNullable(embed.getFields()).ifPresent(fields -> {
                     fields.forEach(field -> {
                         JSONObject jsonField = new JSONObject();
 
