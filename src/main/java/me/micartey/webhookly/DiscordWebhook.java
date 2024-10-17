@@ -55,6 +55,8 @@ public class DiscordWebhook {
                     jsonEmbed.put("color", rgb);
                 });
 
+                jsonEmbed.put("timestamp", embed.getTimestamp());
+
                 Optional.ofNullable(embed.getFooter()).ifPresent(footer -> {
                     JSONObject jsonFooter = new JSONObject();
 
