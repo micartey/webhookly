@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.awt.Color;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class EmbedObject {
     private String description;
     private String url;
     private Color color;
+    private OffsetDateTime timestamp;
 
     private Footer footer;
     private Thumbnail thumbnail;
