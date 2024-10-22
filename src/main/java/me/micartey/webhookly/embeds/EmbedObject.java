@@ -5,10 +5,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.awt.Color;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,21 +25,5 @@ public class EmbedObject {
     private Author author;
 
     private final List<Field> fields = new ArrayList<>();
-
-    public void setTimestampFromOffsetDateTime(OffsetDateTime offsetDateTime) {
-        timestamp = offsetDateTime.toString();
-    }
-
-    public void setTimestampFromTemporalAccessor(TemporalAccessor temporalAccessor) {
-        if (temporalAccessor instanceof Instant) {
-            timestamp = OffsetDateTime.ofInstant((Instant) temporalAccessor, Clock.systemDefaultZone().getZone()).toString();
-        } else {
-            timestamp = OffsetDateTime.from(temporalAccessor).toString();
-        }
-    }
-
-    public void setTimestampFromTimeInMillis(long timeInMillis) {
-        setTimestampFromTemporalAccessor(Instant.ofEpochMilli(timeInMillis));
-    }
 
 }
