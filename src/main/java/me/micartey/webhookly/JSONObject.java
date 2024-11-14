@@ -25,10 +25,10 @@ public class JSONObject {
         int i = 0;
         for (Map.Entry<String, Object> entry : entrySet) {
             Object val = entry.getValue();
-            builder.append(quote(entry.getKey())).append(":");
+            builder.append(escape(entry.getKey())).append(":");
 
             if (val instanceof String) {
-                builder.append(quote(String.valueOf(val)));
+                builder.append(escape(String.valueOf(val)));
             } else if (val instanceof Integer) {
                 builder.append(Integer.valueOf(String.valueOf(val)));
             } else if (val instanceof Boolean) {
@@ -50,7 +50,27 @@ public class JSONObject {
         return builder.toString();
     }
 
-    private String quote(String string) {
-        return "\"" + string + "\"";
+    private String escape(String string) {
+        StringBuilder builder = new StringBuilder("\"");
+        for (char c : string.toCharArray()) {
+            if (c == '\\' || c == '"' || c == '/') {
+                builder.append("\\").append(c);
+            } else if (c == '\b') {
+                builder.append("\\b");
+            } else if (c == '\t') {
+                builder.append("\\t");
+            } else if (c == '\n') {
+                builder.append("\\n");
+            } else if (c == '\f') {
+                builder.append("\\f");
+            } else if (c == '\r') {
+                builder.append("\\r");
+            } else if (c < ' ' || c > 0x7f) {
+                builder.append(String.format("\\u%04x", (int) c));
+            } else {
+                builder.append(c);
+            }
+        }
+        return builder.append('"').toString();
     }
 }
